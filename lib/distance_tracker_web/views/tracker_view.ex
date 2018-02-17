@@ -11,6 +11,13 @@ defmodule DistanceTrackerWeb.TrackerView do
   end
 
   def render("tracker.json", %{tracker: tracker}) do
-    %{id: tracker.id}
+    %{
+      uuid: tracker.uuid,
+      activity: tracker.activity,
+      completed_at: tracker.completed_at,
+      distance: tracker.distance,
+      inserted_at: tracker.inserted_at,
+      updated_at: tracker.updated_at
+    }
   end
 end

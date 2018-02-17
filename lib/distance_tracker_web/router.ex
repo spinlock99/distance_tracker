@@ -9,5 +9,6 @@ defmodule DistanceTrackerWeb.Router do
     pipe_through :api
 
     resources "/users", UserController, except: [:new, :edit]
+    resources "/trackers", TrackerController, except: [:new, :edit]
   end
 end

@@ -1,8 +1,10 @@
 defmodule DistanceTrackerWeb.TrackerController do
   use DistanceTrackerWeb, :controller
 
-  alias DistanceTracker.Users
+  alias DistanceTracker.{Repo, Users}
   alias DistanceTracker.Users.Tracker
+  alias DistanceTrackerWeb.ErrorView
+  alias Plug.Conn
 
   action_fallback DistanceTrackerWeb.FallbackController
 
@@ -21,8 +23,14 @@ defmodule DistanceTrackerWeb.TrackerController do
   end
 
   def show(conn, %{"id" => id}) do
-    tracker = Users.get_tracker!(id)
-    render(conn, "show.json", tracker: tracker)
+    with tracker = %Tracker{} <- Repo.get(Tracker, id) do
+      render(conn, "show.json", tracker: tracker)
+    else
+      nil ->
+        conn
+        |> put_status(404)
+        |> render(ErrorView, "404.json", error: "Not found")
+    end
   end
 
   def update(conn, %{"id" => id, "tracker" => tracker_params}) do

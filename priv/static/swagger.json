@@ -1,11 +1,97 @@
 {
   "swagger": "2.0",
-  "paths": {},
+  "paths": {
+    "/api/trackers": {
+      "get": {
+        "tags": [
+          "Tracker"
+        ],
+        "summary": "List all recorded activities",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Trackers"
+            },
+            "description": "Ok"
+          }
+        },
+        "parameters": [],
+        "operationId": "DistanceTrackerWeb.TrackerController.index",
+        "description": "List all recorded activities"
+      }
+    }
+  },
   "info": {
     "version": "0.0.2",
     "title": "Distance Tracker",
     "host": "shere-out-app.is.hosted"
   },
   "host": "localhost:4000",
-  "definitions": {}
+  "definitions": {
+    "Trackers": {
+      "type": "array",
+      "title": "Trackers",
+      "items": {
+        "$ref": "#/definitions/Tracker"
+      },
+      "description": "All recorded activities"
+    },
+    "Tracker": {
+      "type": "object",
+      "title": "Tracker",
+      "required": [
+        "distance",
+        "activity"
+      ],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "The ID of the activity"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When was the activity last updated"
+        },
+        "inserted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When was the activity initially inserted"
+        },
+        "distance": {
+          "type": "integer",
+          "description": "How far the activity went"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the activity was completed"
+        },
+        "activity": {
+          "type": "string",
+          "description": "The activity recorded"
+        }
+      },
+      "example": {
+        "distance": 150,
+        "completed_at": "2017-03-21T14:00:00Z",
+        "activity": "climbing"
+      },
+      "description": "A recording of an activity."
+    },
+    "Error": {
+      "type": "object",
+      "title": "Error",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "The error message"
+        }
+      },
+      "description": "Error response from API"
+    }
+  }
 }

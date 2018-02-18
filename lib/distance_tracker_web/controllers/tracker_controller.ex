@@ -9,6 +9,48 @@ defmodule DistanceTrackerWeb.TrackerController do
 
   action_fallback DistanceTrackerWeb.FallbackController
 
+  def swagger_definitions do
+    %{
+      Tracker: swagger_schema do
+        title "Tracker"
+        description "A recording of an activity."
+        properties do
+          activity :string, "The activity recorded", required: true
+          completed_at :string, "When the activity was completed", format: "ISO-8601"
+          distance :integer, "How far the activity went", required: true
+          inserted_at :string, "When was the activity initially inserted", format: "ISO-8601"
+          updated_at :string, "When was the activity last updated", format: "ISO-8601"
+          uuid :string, "The ID of the activity"
+        end
+        example %{
+          completed_at: "2017-03-21T14:00:00Z",
+          activity: "climbing",
+          distance: 150
+        }
+      end,
+      Trackers: swagger_schema do
+        title "Trackers"
+        description "All recorded activities"
+        type :array
+        items Schema.ref(:Tracker)
+      end,
+      Error: swagger_schema do
+        title "Error"
+        description "Error response from API"
+        properties do
+          error :string, "The error message", required: true
+        end
+      end
+    }
+  end
+
+  swagger_path :index do
+      get "/api/trackers"
+      summary "List all recorded activities"
+      description "List all recorded activities"
+      response 200, "Ok", Schema.ref(:Trackers)
+  end
+
   def index(conn, _params) do
     trackers = Users.list_trackers()
     render(conn, "index.json", trackers: trackers)

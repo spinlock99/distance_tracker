@@ -33,12 +33,13 @@ defmodule DistanceTracker.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:cowboy, "~> 1.0"},
+      {:gettext, "~> 0.11"},
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:uuid, "~> 1.1"},
     ]
   end
 

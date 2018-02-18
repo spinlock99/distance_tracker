@@ -3,6 +3,8 @@ defmodule DistanceTracker.Users.Tracker do
   import Ecto.Changeset
   alias DistanceTracker.Users.Tracker
 
+  @derive {Phoenix.Param, key: :uuid}
+
   @timestamps_opts [type: :utc_datetime, usec: true]
   @primary_key {:uuid, :binary_id, [autogenerate: true]}
 

@@ -34,7 +34,7 @@ defmodule DistanceTracker.UsersTest do
     end
 
     test "create_tracker/1 with valid data creates a tracker" do
-      assert {:ok, %Tracker{} = tracker} = Users.create_tracker(@valid_attrs)
+      assert {:ok, %Tracker{}} = Users.create_tracker(@valid_attrs)
     end
 
     test "create_tracker/1 with invalid data returns error changeset" do

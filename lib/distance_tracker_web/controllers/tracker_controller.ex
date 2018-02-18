@@ -41,10 +41,17 @@ defmodule DistanceTrackerWeb.TrackerController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    tracker = Users.get_tracker!(id)
-    with {:ok, %Tracker{}} <- Users.delete_tracker(tracker) do
-      send_resp(conn, :no_content, "")
+  def delete(conn, %{"id" => uuid}) do
+    with tracker = %Tracker{} <- Repo.get(Tracker, uuid) do
+      Repo.delete!(tracker)
+      conn
+      |> Conn.put_status(204)
+      |> Conn.send_resp(:no_content, "")
+    else
+      nil ->
+        conn
+        |> put_status(404)
+        |> render(ErrorView, "404.json", error: "Not found")
     end
   end
 end

@@ -1,5 +1,6 @@
 defmodule DistanceTrackerWeb.TrackerController do
   use DistanceTrackerWeb, :controller
+  use PhoenixSwagger
 
   alias DistanceTracker.{Repo, Users}
   alias DistanceTracker.Users.Tracker
